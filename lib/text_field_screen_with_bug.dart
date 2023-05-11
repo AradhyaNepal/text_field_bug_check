@@ -47,8 +47,13 @@ class _TextFieldBugScreenState extends State<TextFieldBugScreen> {
         width: size.width,
         child: Scaffold(
           appBar: AppBar(
-            title: const Text(
-              "Latest At Top"
+            title: ValueListenableBuilder(
+              valueListenable: widget.textFieldScreenAnalytics,
+              builder: (context,value,child) {
+                return Text(
+                  "Latest At Top : ${widget.textFieldScreenAnalytics.value.length} Result",
+                );
+              }
             ),
             actions: [
               IconButton(
@@ -72,14 +77,16 @@ class _TextFieldBugScreenState extends State<TextFieldBugScreen> {
                 return SizedBox(
                   width: size.width,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children:value.map((e) => Padding(
-                      padding: const EdgeInsets.only(bottom: 5),
-                      child: Text(
-                        e,
-                        textAlign: TextAlign.center,
-                      ),
-                    )).toList(),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children:[
+                      for (int i=0;i<widget.textFieldScreenAnalytics.value.length;i++)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 5),
+                          child: Text(
+                            "${widget.textFieldScreenAnalytics.value.length-i}) ${widget.textFieldScreenAnalytics.value[i]}",
+                          ),
+                        ),
+                    ],
                   ),
                 );
               }
